@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:clipChildren="false"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/air_scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="96.25mm"
+            android:layout_height="150mm"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="94mm"
+                android:layout_marginBottom="0mm"
+                android:paddingBottom="0mm"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="17mm"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="60mm"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="19mm"
+                                android:layout_height="16mm"
+                                android:src="@drawable/android_logo" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="1mm">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="3mm"
+                                android:textColor="#000"
+                                android:textStyle="bold"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="9533866"
+                                android:textSize="3mm"
+                                android:textColor="#000"
+                                android:textStyle="bold"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="1mm"
+                                android:text="https://www.fengyee.com"
+                                android:textColor="#000"
+                                android:textSize="3mm" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="KC24"
+                            android:textColor="#000"
+                            android:textSize="7mm"
+                            android:textStyle="bold"
+                            android:gravity="bottom"
+                            android:layout_marginRight="2mm"
+                            android:layout_marginBottom="3mm"/>
+
+                        <ImageView
+                            android:id="@+id/air_imageviewbarcode"
+                            android:layout_width="16mm"
+                            android:layout_height="16mm"
+                            android:layout_marginTop="0.5mm"
+                            android:src="@drawable/android_logo" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#000"
+                    android:orientation="vertical"
+                    android:padding="1mm">
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#fff">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="13mm"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:paddingBottom="0.5mm"
+                                android:background="#000">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="订单预配航班"
+                                    android:textColor="#000"
+                                    android:textSize="6mm"
+                                    android:textStyle="bold"
+                                    android:background="#fff"/>
+                            </LinearLayout>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:paddingBottom="0.5mm"
+                                android:background="#000">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:background="#fff">
+
+                                    <LinearLayout
+                                        android:layout_width="46mm"
+                                        android:layout_height="18mm"
+                                        android:background="#000"
+                                        android:orientation="vertical"
+                                        android:paddingRight="0.5mm">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="#fff"
+                                            android:text="  始发站/DEP"
+                                            android:textColor="#000"
+                                            android:textSize="4mm" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:orientation="horizontal"
+                                            android:background="#fff"
+                                            android:gravity="center_horizontal">
+
+                                            <TextView
+                                                android:id="@+id/air_departure"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="match_parent"
+                                                android:gravity="center"
+                                                android:text="SZX"
+                                                android:textColor="#000"
+                                                android:textSize="9mm"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:id="@+id/air_startCity"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="match_parent"
+                                                android:text="/深圳市"
+                                                android:textSize="6mm"
+                                                android:textStyle="bold"
+                                                android:textColor="#000"
+                                                android:gravity="center_vertical"/>
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="48.5mm"
+                                        android:layout_height="18mm"
+                                        android:orientation="vertical"
+                                        android:paddingTop="0.5mm">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="  到达站/DEST"
+                                            android:textColor="#000"
+                                            android:textSize="4mm" />
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:orientation="horizontal"
+                                            android:background="#fff"
+                                            android:gravity="center_horizontal">
+                                             <TextView
+                                                android:id="@+id/air_arrival"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="match_parent"
+                                                android:text="PEK"
+                                                android:gravity="center"
+                                                android:textStyle="bold"
+                                                android:textColor="#000"
+                                                android:textSize="9mm" />
+                                            <TextView
+                                                android:id="@+id/air_endCity"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="match_parent"
+                                                android:text="/北京市"
+                                                android:textSize="6mm"
+                                                android:textStyle="bold"
+                                                android:textColor="#000"
+                                                android:gravity="center_vertical"/>
+                                        </LinearLayout>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1">
+
+                                    <LinearLayout
+                                        android:layout_width="46mm"
+                                        android:layout_height="18mm"
+                                        android:background="#000"
+                                        android:orientation="vertical"
+                                        android:paddingRight="0.5mm">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="#fff"
+                                            android:text="  航班号/Flight NO"
+                                            android:textColor="#000"
+                                            android:textSize="4mm" />
+
+                                        <TextView
+                                            android:id="@+id/air_flightNo"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:background="#fff"
+                                            android:text="MU1234"
+                                            android:gravity="center"
+                                            android:textStyle="bold"
+                                            android:textColor="#000"
+                                            android:textSize="9mm" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="48.5mm"
+                                        android:layout_height="18mm"
+                                        android:orientation="vertical"
+                                        android:paddingTop="0.5mm">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="  航班日期/Flight Date"
+                                            android:textColor="#000"
+                                            android:textSize="4mm" />
+
+                                        <TextView
+                                            android:id="@+id/air_flightDate"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:text="2020-12-29"
+                                            android:gravity="center"
+                                            android:textStyle="bold"
+                                            android:textColor="#000"
+                                            android:textSize="8mm" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#000"
+                            android:paddingTop="0.5mm">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="#fff">
+
+                                <LinearLayout
+                                    android:layout_width="10mm"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="运单号"
+                                        android:textStyle="bold"
+                                        android:textSize="4mm"
+                                        android:ems="1"
+                                        android:textColor="#000"/>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/air_tagNum"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="SF2000000011_001"
+                                        android:textStyle="bold"
+                                        android:gravity="center"
+                                        android:textSize="5mm"
+                                        android:textColor="#000"/>
+
+                                    <ImageView
+                                        android:id="@+id/air_imageView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="13mm"
+                                        app:srcCompat="@drawable/android_logo"
+                                        android:layout_marginBottom="1mm"/>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </TableRow>
+
+                    </TableLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60mm"
+                android:orientation="vertical"></LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
