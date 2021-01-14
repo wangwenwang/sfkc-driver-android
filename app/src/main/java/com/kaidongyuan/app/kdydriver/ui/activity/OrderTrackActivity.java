@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
@@ -84,9 +85,22 @@ public class OrderTrackActivity extends BaseActivity implements AsyncHttpCallbac
         }
         Log.d("LM", "获取配载轨迹点，规划路线------");
         Map<String, String> params = new HashMap<String, String>();
-        params.put("shipmentId", AES256Utils.encrypt(Constants.SecretKey,orderId));
+//        params.put("shipmentId", AES256Utils.encrypt(Constants.SecretKey,orderId));
+
+        params.put("shipmentId",orderId);
+
+        Map<String, Object> entity = new HashMap<String, Object>();
+
+        entity.put("entity",params);
+
+        Map<String, String> param = new HashMap<String, String>();
+
+        Log.d("LM", "getPath:entity的值 " + JSONObject.toJSONString(entity));
+
+        param.put("param", AES256Utils.base64Encode(JSONObject.toJSONString(entity).getBytes()));
+
         mClient.setShowToast(false);
-        mClient.sendRequest(Constants.URL.SAAS_API_BASE + "getPathData.do", params, Tag_Get_Locations);
+        mClient.sendRequest(Constants.URL.SAAS_API_BASE + "kc-transport/tmsApp/getPathData",  param, Tag_Get_Locations);
         Log.d("LM", "getPath: " + Constants.URL.SAAS_API_BASE);
     }
 
@@ -133,15 +147,38 @@ public class OrderTrackActivity extends BaseActivity implements AsyncHttpCallbac
 
     @Override
     public void postSuccessMsg(String msg, String request_tag) {
+
+        Log.d("LM", "配载单位置点信息 " + msg);
+
         if (msg.equals("error")) {
             mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
             showToastMsg("数据加载失败，请退出重进！");
             return;
         } else if (request_tag.equals(Tag_Get_Locations)) {
-            JSONObject jo = JSON.parseObject(msg);
-            String msglm = jo.getString("Msg");
-            Log.d("LM", "Msg: " + msglm);
-            List<Location> locationlist = JSON.parseArray(jo.getString("pathData"), Location.class);
+
+            JSONObject result = null;
+            JSONObject entity = null;
+
+            JSONObject jo= JSON.parseObject(msg);
+
+            try {
+                result = JSON.parseObject(new String(AES256Utils.base64Decode(jo.getString("result"))));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            List<Location> locationlist = null;
+            try {
+                entity = result.getJSONObject("entity");
+
+                byte[] pathData = entity.getBytes("pathData");
+                String pathDataStr = new String(pathData);
+                locationlist = JSON.parseArray(pathDataStr, Location.class);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             Log.d("LM", "位置点数量: 前");
             Log.d("LM", "位置点数量: " + locationlist.size());
             Log.d("LM", "位置点数量: " + locationlist);

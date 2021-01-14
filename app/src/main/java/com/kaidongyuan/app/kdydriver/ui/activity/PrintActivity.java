@@ -57,6 +57,8 @@ import android.view.Menu;
 
 import android.graphics.Canvas;
 
+import org.json.JSONStringer;
+
 public class PrintActivity extends BaseActivity implements AsyncHttpCallback{
 
     protected MyLoadingDialog myLoadingDialog;
@@ -220,22 +222,26 @@ public class PrintActivity extends BaseActivity implements AsyncHttpCallback{
             view =  getLayoutInflater().inflate(R.layout.print_layout, null);
 
             // 记录是否打印和打印次数
-            Map<String, String> params = new HashMap<String, String>();
+            Map<String, Object> params = new HashMap<String, Object>();
             params.put("omsNo", orderInfo.getString("omsNo"));
 
             Map<String, String> param = new HashMap<String, String>();
 
-            param.put("params", AES256Utils.encrypt(Constants.SecretKey,JSONObject.toJSONString(params)));
-//            mClient.setShowToast(false);
-            mClient.sendRequest(Constants.URL.SAAS_API_BASE + "updatePrintCount.do", param, Tag_Get_Locations,false);
+            Map<String, Object> entity = new HashMap<String, Object>();
 
-            Log.d("LM", "记录打印次数2"+param );
+            entity.put("entity",params);
+
+            param.put("param", AES256Utils.base64Encode(JSONObject.toJSONString(entity).getBytes()));
+
+            mClient.sendRequest(Constants.URL.SAAS_API_BASE + "kc-transport/tmsApp/updatePrintCount", param, Tag_Get_Locations,false);
 
             //  生成二维码
             ImageView imageviewqrcode45 = (ImageView) view.findViewById(R.id.imageviewqrcode);
 
-            Bitmap imagebitmap = createQRCode(orderInfo.getString("QRCode"), 400);
+            Bitmap imagebitmap = createQRCode(orderInfo.getString("qRCode"), 400);
             imageviewqrcode45.setImageBitmap(imagebitmap);
+
+            Log.d("LM", "二维码"+orderInfo.getString("qRCode") );
 
             //  生成二维码 小联
             ImageView imageviewqrcode156 = (ImageView) view.findViewById(R.id.imageviewqrcode1);
@@ -570,14 +576,18 @@ public class PrintActivity extends BaseActivity implements AsyncHttpCallback{
             viewTwo = getLayoutInflater().inflate(R.layout.print_layouttwoinone, null);
 
             // 记录是否打印和打印次数
-            Map<String, String> params = new HashMap<String, String>();
+            Map<String, Object> params = new HashMap<String, Object>();
             params.put("omsNo", orderInfo12.getString("omsNo"));
 
             Map<String, String> param = new HashMap<String, String>();
 
-            param.put("params",  AES256Utils.encrypt(Constants.SecretKey,JSONObject.toJSONString(params)));
-//            mClient.setShowToast(false);
-            mClient.sendRequest(Constants.URL.SAAS_API_BASE + "updatePrintCount.do", param, Tag_Get_Locations,false);
+            Map<String, Object> entity = new HashMap<String, Object>();
+//
+            entity.put("entity",params);
+
+            param.put("param", AES256Utils.base64Encode(JSONObject.toJSONString(entity).getBytes()));
+
+            mClient.sendRequest(Constants.URL.SAAS_API_BASE + "kc-transport/tmsApp/updatePrintCount", param, Tag_Get_Locations,false);
 
             Log.d("LM", "记录打印次数2"+param );
 
@@ -609,7 +619,7 @@ public class PrintActivity extends BaseActivity implements AsyncHttpCallback{
             TextView two_departure = (TextView) viewTwo.findViewById(R.id.departure);
             two_departure.setText(orderInfo12.getString("startEndCity"));
 
-            Bitmap imagebitmap = createQRCode(orderInfo12.getString("QRCode"), 400);
+            Bitmap imagebitmap = createQRCode(orderInfo12.getString("qRCode"), 400);
 
             //  生成二维码 小联  二合一
             ImageView imageviewqrcodetwo2 = (ImageView) viewTwo.findViewById(R.id.imageviewqrcodetwo2);
@@ -832,14 +842,19 @@ public class PrintActivity extends BaseActivity implements AsyncHttpCallback{
             viewTwoother = getLayoutInflater().inflate(R.layout.print_layouttwoinoneother, null);
 
             // 记录是否打印和打印次数
-            Map<String, String> params = new HashMap<String, String>();
+            Map<String, Object> params = new HashMap<String, Object>();
             params.put("omsNo", orderInfo12.getString("omsNo"));
 
             Map<String, String> param = new HashMap<String, String>();
 
-            param.put("params", AES256Utils.encrypt(Constants.SecretKey,JSONObject.toJSONString(params)));
-//            mClient.setShowToast(false);
-            mClient.sendRequest(Constants.URL.SAAS_API_BASE + "updatePrintCount.do", param, Tag_Get_Locations,false);
+            Map<String, Object> entity = new HashMap<String, Object>();
+
+            entity.put("entity",params);
+
+//            param.put("params", AES256Utils.encrypt(Constants.SecretKey,JSONObject.toJSONString(params)));
+            param.put("param", AES256Utils.base64Encode(JSONObject.toJSONString(entity).getBytes()));
+
+            mClient.sendRequest(Constants.URL.SAAS_API_BASE + "kc-transport/tmsApp/updatePrintCount", param, Tag_Get_Locations,false);
 
             Log.d("LM", "记录打印次数2"+param );
 
@@ -871,7 +886,7 @@ public class PrintActivity extends BaseActivity implements AsyncHttpCallback{
             TextView two_departure = (TextView) viewTwoother.findViewById(R.id.airlinenumber);
             two_departure.setText(orderInfo12.getString("startEndCity"));
 
-            Bitmap imagebitmap = createQRCode(orderInfo12.getString("QRCode"), 400);
+            Bitmap imagebitmap = createQRCode(orderInfo12.getString("qRCode"), 400);
 
             //  生成二维码 小联  二合一
             ImageView imageviewqrcodetwo2 = (ImageView) viewTwoother.findViewById(R.id.imageviewqrcodetwo2);

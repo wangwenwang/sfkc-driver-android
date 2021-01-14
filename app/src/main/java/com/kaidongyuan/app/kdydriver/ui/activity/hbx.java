@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -86,6 +87,8 @@ import org.json.JSONArray;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -111,7 +114,7 @@ public class hbx extends BaseFragmentActivity implements AsyncHttpCallback {
 
     static public IWXAPI mWxApi;
 
-    public final static String DestFileName = "sxjf_tms.apk";
+    public final static String DestFileName = "sxjf2_cs.apk";
     public final static String ZipFileName = "dist.zip";
 
     String server_App_Version;
@@ -218,6 +221,24 @@ public class hbx extends BaseFragmentActivity implements AsyncHttpCallback {
 
         mWebView = (WebView) findViewById((R.id.lmwebview));
         mWebView.getSettings().setTextZoom(100);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+            mWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+        }else{
+            try {
+                Class<?> clazz = mWebView.getSettings().getClass();
+                Method method = clazz.getMethod("setAllowUniversalAccessFromFileURLs", boolean.class);
+                if (method != null) {
+                    method.invoke(mWebView.getSettings(), true);
+                }
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
 
         mWebView.setWebViewClient(new WebViewClient() {
             public void onPageFinished(WebView view, String url) {
@@ -447,16 +468,33 @@ public class hbx extends BaseFragmentActivity implements AsyncHttpCallback {
                 return;
             }
         }else if (request_tag.equals(TAG_CHECKVERSION)){
+
+            JSONObject result = null;
+
             JSONObject jo= JSON.parseObject(msg);
 
-            String status = jo.getString("status");
+            try {
+                result = JSON.parseObject(new String(AES256Utils.base64Decode(jo.getString("result"))));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            String status = result.getString("code");
 
             String apkDownloadUrl = null;
             String server_apkVersion = null;
-            if(status.equals("1")) {
-                JSONObject dict = JSON.parseObject(AES256Utils.decrypt(Constants.SecretKey,jo.getString("data")));
-                apkDownloadUrl = dict.getString("downloadUrl");
-                server_apkVersion = dict.getString("versionNo");
+            if(status.equals("0")) {
+                //JSONObject dict = JSON.parseObject(AES256Utils.decrypt(Constants.SecretKey,jo.getString("data")));
+                JSONObject dict = null;
+                try {
+                    dict = result.getJSONObject("entity");
+                    apkDownloadUrl = dict.getString("downloadUrl");
+                    server_apkVersion = dict.getString("versionNo");
+
+                    Log.d("LM", "服务器下载地址：" + apkDownloadUrl + "；版本号：" + server_apkVersion);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             if (server_apkVersion!=null && apkDownloadUrl!=null) {
@@ -832,10 +870,11 @@ public class hbx extends BaseFragmentActivity implements AsyncHttpCallback {
         Log.d("LM", "检查apk及zip版本");
 
         Map<String, String> params = new HashMap<>();
+//        params.put("param", null);
         params.put("params", AES256Utils.encrypt(Constants.SecretKey,"{\"tenantCode\":\"SFKC\"}"));
 
         //params.put("params","{\"tenantCode\":\"SFKC\"}");
-        mClient.sendRequest(Constants.URL.SAAS_API_BASE + "queryAppVersion.do", params, TAG_CHECKVERSION);
+        mClient.sendRequest(Constants.URL.SAAS_API_BASE + "kc-transport/tmsApp/queryAppVersion", params, TAG_CHECKVERSION);
     }
 
     private void initHandler() {

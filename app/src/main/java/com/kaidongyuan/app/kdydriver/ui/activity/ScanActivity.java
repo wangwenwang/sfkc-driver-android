@@ -52,6 +52,7 @@ import org.json.simple.parser.ParseException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -391,21 +392,43 @@ public class ScanActivity extends CaptureActivity {
 
         Log.d("LM", "检查apk及zip版本");
 
-        String params = "{\"tenantCode\":\"SFKC\"}";
-        String paramsEncoding = URLEncoder.encode(params);
-        String Strurl = Constants.URL.SAAS_API_BASE + "queryAppVersion.do?params=" + paramsEncoding;
-        HttpURLConnection conn = null;
+//        String params = "{\"tenantCode\":\"SFKC\"}";
+//        String paramsEncoding = URLEncoder.encode(params);
+//        String Strurl = Constants.URL.SAAS_API_BASE + "kc-transport/tmsApp/queryAppVersion?params=" + paramsEncoding;
+
+//        String Strurl = Constants.URL.SAAS_API_BASE + "kc-transport/tmsApp/queryAppVersion";
+
+        HttpURLConnection HttpURLConnection = null;
         try {
 
-            URL url = new URL(Strurl);
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setConnectTimeout(5000);
-            conn.setRequestMethod("GET");
-            if (HttpURLConnection.HTTP_OK == conn.getResponseCode()) {
+//            URL url = new URL(Strurl);
+//            conn = (HttpURLConnection) url.openConnection();
+//            conn.setConnectTimeout(5000);
+//            conn.setRequestMethod("POST");
+            URL url = new URL(Constants.URL.SAAS_API_BASE + "kc-transport/tmsApp/queryAppVersion");
 
-                InputStream in = conn.getInputStream();
+            HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+            httpURLConnection.setConnectTimeout(5000);     //设置连接超时时间
+            httpURLConnection.setDoInput(true);                  //打开输入流，以便从服务器获取数据
+            httpURLConnection.setDoOutput(true);                 //打开输出流，以便向服务器提交数据
+            httpURLConnection.setRequestMethod("POST");     //设置以Post方式提交数据
+            httpURLConnection.setUseCaches(false);               //使用Post方式不能使用缓存
+            //设置请求体的类型是文本类型
+            httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            //设置请求体的长度
+//            httpURLConnection.setRequestProperty("Content-Length", String.valueOf(data.length));
+            //获得输出流，向服务器写入数据
+//            OutputStream outputStream = httpURLConnection.getOutputStream();
+//            outputStream.write(data);
+            int response = httpURLConnection.getResponseCode();            //获得服务器的响应码
+
+            if (HttpURLConnection.HTTP_OK == response) {
+
+                InputStream in = httpURLConnection.getInputStream();
                 String resultStr = Tools.inputStream2String(in);
                 resultStr = URLDecoder.decode(resultStr, "UTF-8");
+
+                Log.d("LM", "检查apk及zip版本返回的数据"+resultStr);
 
                 try {
                     org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject) (new JSONParser().parse(resultStr));
@@ -445,7 +468,7 @@ public class ScanActivity extends CaptureActivity {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            conn.disconnect();
+            HttpURLConnection.disconnect();
         }
         Log.d("LM", "checkVersion: ");
     }

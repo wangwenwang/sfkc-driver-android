@@ -403,27 +403,31 @@ public class Tools{
 
 		String params1 =
 				"{" +
-						"\"cellphone\":\"" + cellphone + "\"," +
-						"\"userName\":\"" + "" + "\"," +
-						"\"vehicleLocation\":\"" + vehicleLocation + "\"," +
-						"\"lon\":\"" + lon + "\"," +
-						"\"lat\":\"" + lat + "\"," +
-						"\"uuid\":\"" + "android" + "\"," +
-						"\"code\":\"" + code + "\"," +
-						"\"brightscreen\":\"" + brightscreen + "\"," +
-						"\"charging\":\"" + charging + "\"," +
-						"\"os\":\"" + os + "\"" +
+					"\"entity\":" +
+						"{" +
+								"\"cellphone\":\"" + cellphone + "\"," +
+								"\"userName\":\"" + "" + "\"," +
+								"\"vehicleLocation\":\"" + vehicleLocation + "\"," +
+								"\"lon\":\"" + lon + "\"," +
+								"\"lat\":\"" + lat + "\"," +
+								"\"uuid\":\"" + "android" + "\"," +
+								"\"code\":\"" + code + "\"," +
+								"\"brightscreen\":\"" + brightscreen + "\"," +
+								"\"charging\":\"" + charging + "\"," +
+								"\"os\":\"" + os + "\"" +
+						"}"+
 				"}";
 
 		Log.d("LM", "params1: " + params1);
 
 		Map<String, String> params = new HashMap<>();
-		params.put("params", AES256Utils.encrypt(Constants.SecretKey,params1));
+		//params.put("params", AES256Utils.encrypt(Constants.SecretKey,params1));
+		params.put("param",AES256Utils.base64Encode(params1.getBytes()));
 		byte[] data = getRequestData(params, "utf-8").toString().getBytes();//获得请求体
 		try {
 
 			Log.d("LM", "上传位置");
-			URL url = new URL(Constants.URL.SAAS_API_BASE + "timingTracking.do");
+			URL url = new URL(Constants.URL.SAAS_API_BASE + "kc-transport/tmsApp/timingTracking");
 
 			HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
 			httpURLConnection.setConnectTimeout(5000);     //设置连接超时时间

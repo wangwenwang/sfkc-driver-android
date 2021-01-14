@@ -41,7 +41,9 @@ public class Constants {
 
 
 //        public static  final String SAAS_API_BASE = "http://113.105.119.25:8099/tmsAppNew/";
-        public static  final String SAAS_API_BASE = "https://sfkc.sf-express.com/tmsAppNew/";
-//        public static  final String SAAS_API_BASE = "http://sit.fengyee.com/tmsapp/";
+//        public static  final String SAAS_API_BASE = "https://sfkc.sf-express.com/tmsAppNew/";
+        public static  final String SAAS_API_BASE = "https://sit.fengyee.com/microservice/";
+//        public static  final String SAAS_API_BASE = "https://www.fengyee.com/microservice/";
+
     }
 }
